@@ -86,4 +86,63 @@ object AdvancedPatternMatching extends App {
 
   println(s"Daniel's solution result: $mathProperty2")
 
+
+
+  // Infix patterns
+  case class Or[A, B](a: A, b: B)
+  val either = Or(2, "two")
+  val humanDescription = either match {
+    case number Or string => s"$number is written as $string" // WHAT??? THIS is crazy, cool but crazy
+  }
+
+  println(humanDescription)
+
+
+  // Decomposing sequences
+  val vararg = numbers match {
+    case List(1, _*) => "starting with 1" // _* wildcard so the rest of the list can be anything
+  }
+
+  abstract class MyList[+A] {
+    def head: A = ???
+    def tail: MyList[A] = ???
+  }
+  case object Empty extends MyList[Nothing]
+  case class Cons[+A](override val head: A, override val tail: MyList[A]) extends MyList[A]
+
+  object MyList {
+    def unapplySeq[A](list: MyList[A]): Option[Seq[A]] =
+      if (list == Empty) Some(Seq.empty)
+      else unapplySeq(list.tail).map(list.head +: _) // turns list[A] into a seq[A] with elements in the same order
+  }
+
+  val myList: MyList[Int] = Cons(1, Cons(2, Cons(3, Empty)))
+  val decomposed = myList match {
+    case MyList(1, 2, _*) => "starting with 1, 2"
+    case _ => "something else"
+  }
+
+  println(decomposed)
+
+
+  // Custom return types for unapply
+  // isEmpty: Boolean, get: Something
+  abstract class Wrapper[T] {
+    def isEmpty: Boolean
+    def get: T
+  }
+
+  object PersonWrapper {
+    def unapply(person: Person): Wrapper[String] = new Wrapper[String] {
+      def isEmpty = false
+      def get = person.name
+    }
+  }
+
+  println(bob match { // bob from line 30
+    case PersonWrapper(n) => s"This person's name is $n"
+    case _ => "An alien"
+  })
+  // I kinda get this, the method names seem very important, code won't compile if isEmpty or get are named something else
+
 }
