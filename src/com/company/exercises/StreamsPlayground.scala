@@ -54,7 +54,7 @@ class Cons[+A](hd: A, tl: => MyStream[A]) extends MyStream[A] {
 
   def #::[B >: A](element: B): MyStream[B] = new Cons(element, this) //prepend operator
   def ++[B >: A](anotherStream: => MyStream[B]): MyStream[B] = new Cons(head, tail ++ anotherStream) // concatenate two streams
-  // the => MyStream[B] preserves lazy evaluation when used by the flatMap method below
+  // the '=> MyStream[B]' preserves lazy evaluation when used by the flatMap method below
 
   def foreach(f: A => Unit): Unit = {
     f(head)
