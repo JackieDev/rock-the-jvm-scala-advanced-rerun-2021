@@ -95,5 +95,5 @@ object PimpMyLibrary extends App {
   val aConditionedValue = if (3) "OK" else "Something wrong"
   println(aConditionedValue)
 
-  
+
 }
