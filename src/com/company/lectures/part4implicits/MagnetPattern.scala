@@ -112,7 +112,7 @@ object MagnetPattern extends App {
 
   // hmmmmm, my thinking is this:
   val callByName = add1(AddInt(5))
-  println("callByName: " + callByName) // this works no dont know how to prove drawback 4.
+  println("callByName: " + callByName) // this works so I don't know how to prove drawback 4.
 
   // Daniel says:
   class Handler {
@@ -146,7 +146,7 @@ object MagnetPattern extends App {
     println("Hello, Scala!")
     "hahaha"
   }
-  // hard to trace
+  // hard to trace the 'error'
 
 
 }
