@@ -2,6 +2,8 @@ package com.company.lectures.part5ts
 
 object RockingInheritance extends App {
 
+  // Started Section 6: Mastering the Type System!!
+
   // convenience
   trait Writer[T] {
     def write(value: T): Unit
